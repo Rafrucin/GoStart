@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"gostart/printerr"
 	"reflect"
 	"strings"
-	"gostart/printerr"
+	"gostart/models"
 )
 
 const confTickets = 50
@@ -14,6 +15,7 @@ var firstName string
 var lastName string
 var email string
 var userTickets uint
+var userList = make([]models.UserData, 0)
 
 func main() {
 
@@ -39,7 +41,6 @@ func main() {
 			fmt.Println(checks)
 			continue
 		}
-
 
 		fmt.Println("Howmany tickets do you need?")
 		fmt.Scanln(&userTickets)
@@ -74,11 +75,20 @@ func main() {
 
 		fmt.Printf("%v booked tickets \n\n", firstNames)
 
+		var userOrder = models.UserData{
+			FirstName: firstName,
+			LastName: lastName,
+			Email: email,
+			NumberOfTickets: userTickets,
+		}
 
-		output, err := printerr.PrintTickets(firstNames)
+		userList = append(userList, userOrder)
+		output, err := printerr.PrintTickets(userList)
 
 		if output == "" {
-			println(err);
+			println(err)
+		} else {
+			println(output)
 		}
 
 
