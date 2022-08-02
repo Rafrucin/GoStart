@@ -40,6 +40,7 @@ func main() {
 			continue
 		}
 
+
 		fmt.Println("Howmany tickets do you need?")
 		fmt.Scanln(&userTickets)
 		fmt.Println(userTickets)
@@ -73,10 +74,14 @@ func main() {
 
 		fmt.Printf("%v booked tickets \n\n", firstNames)
 
-		//output, err := printerr.PrintTickets(firstName)
-		//PrintTickets(firstNames)
 
-		//output, err := printerr.PrintTickets(firstNames)
+		output, err := printerr.PrintTickets(firstNames)
+
+		if output == "" {
+			println(err);
+		}
+
+
 	}
 }
 
