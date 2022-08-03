@@ -1,6 +1,8 @@
 package printerr
 
-import "gostart/models"
+import (
+	"gostart/models"
+)
 
 func PrintTickets(tickets []models.UserData ) (string, string) {
 	if len(tickets) < 2 {
@@ -8,3 +10,4 @@ func PrintTickets(tickets []models.UserData ) (string, string) {
 	}
 	return "Printed", ""
 }
+

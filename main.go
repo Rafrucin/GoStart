@@ -2,11 +2,15 @@ package main
 
 import (
 	"fmt"
+	"gostart/models"
 	"gostart/printerr"
 	"reflect"
 	"strings"
-	"gostart/models"
+	"sync"
+	"time"
 )
+
+var Wg = sync.WaitGroup{}
 
 const confTickets = 50
 
@@ -73,6 +77,14 @@ func main() {
 			firstNames = append(firstNames, firstNameOnly[0])
 		}
 
+		Wg.Add(3)
+		go FireDontForget("smt")
+		go AwaitMe("solo")
+
+		awaitedValue := AwaitMe("value")
+
+		println("Await:",awaitedValue)
+
 		fmt.Printf("%v booked tickets \n\n", firstNames)
 
 		var userOrder = models.UserData{
@@ -91,8 +103,15 @@ func main() {
 			println(output)
 		}
 
+		for _, userItem := range userList {
+			println(userItem.Email)
+		}
 
+		
+
+		break
 	}
+	Wg.Wait()
 }
 
 func checks() string {
@@ -106,4 +125,20 @@ func checks() string {
 	}
 
 	return ""
+}
+
+func AwaitMe (input string) string{
+	println("wait started", input)
+	time.Sleep(2*time.Second)
+	println("wait done", input)
+	Wg.Done()
+	return "Thanks for waiting " + input
+}
+
+func FireDontForget (input string) string {
+	println("~~~~~~~~~~~~~", input)
+	time.Sleep(4*time.Second)
+	println("fire done")
+	Wg.Done()
+	return "back to main"
 }
